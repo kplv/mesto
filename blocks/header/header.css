@@ -1,0 +1,10 @@
+.header {
+  margin: auto;
+  max-width: 882px;
+}
+
+@media screen and (max-width: 882px) {
+  .header {
+    max-width: 100%;
+  }
+}

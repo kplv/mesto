@@ -1,0 +1,12 @@
+.element {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  position: relative;
+}
+
+@media screen and (max-width: 540px) {
+  .element {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin-top: 36px;
+  }
+}

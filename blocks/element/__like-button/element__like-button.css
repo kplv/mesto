@@ -1,0 +1,29 @@
+.element__like-button {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #FFFFFF;
+  background-color: inherit;
+  background-image: url(../../../vendor/images/icon-like.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: opacity .3s ease, transform .2s ease;
+  position: absolute;
+  bottom: 32px;
+  right: 20px;
+}
+
+
+.element__like-button:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+.element__like-button:focus {
+  outline: none;
+}
+
+.element__like-button:active {
+  transform: scale(.9);
+  outline: none;
+}
