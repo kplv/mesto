@@ -10,75 +10,81 @@
 </head>
 <body class="page">
 
-  <section class="popup">
-    <form class="popup__container">
-      <button class="popup__close-button"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" class="popup__input popup__input_name" value="Жак-Ив Кусто">
-      <input type="text" class="popup__input popup__input_job" value="Исследователь океана">
-      <button class="popup__submit-button">Сохранить</button>
-    </form>
-  </section>
-
   <header class="header">
-    <img src="./vendor/images/mesto-logo.svg" alt="" class="header__logo">
-    <div class="header__divider"></div>
+    <img src="./vendor/images/mesto-logo.svg" alt="Логотип «Место»" class="header__logo">
   </header>
+  <main>
+    <section class="profile">
+      <img src="./vendor/images/profile.jpg" alt="Фото профиля" class="profile__avatar">
+      <div class="profile__info">
+        <div class="profile__name-controls">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button"></button>
+      </div>
+        <p class="profile__job">Исследователь океана</p>
+      </div>
+      <button class="profile__add-button"></button>
+    </section>
 
-  <section class="profile">
-    <img src="./vendor/images/profile.jpg" alt="" class="profile__avatar">
-    <div class="profile__info">
-      <div class="profile__name-controls">
-        <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <button class="profile__edit-button"></button>
-    </div>
-      <h2 class="profile__job">Исследователь океана</h2>
-    </div>
-    <button class="profile__add-button"></button>
+    <section class="photos">
+      <ul class="elements">
+        <li class="element">
+          <img src="./vendor/images/baikal.jpg" alt="Байкал Зимой" class="element__image">
+          <h2 class="element__title">Байкал</h2>
+          <button class="element__like-button"></button>
+        </li>
+
+        <li class="element">
+          <img src="./vendor/images/kamchatka.jpg" alt="Камчатка" class="element__image">
+          <h2 class="element__title">Камчатка</h2>
+          <button class="element__like-button"></button>
+        </li>
+
+        <li class="element">
+          <img src="./vendor/images/sakhalin.jpg" alt="Сахалин" class="element__image">
+          <h2 class="element__title">Сахалин</h2>
+          <button class="element__like-button"></button>
+        </li>
+
+        <li class="element">
+          <img src="./vendor/images/ust-lensk.jpg" alt="Усть-Ленский заповедник" class="element__image">
+          <h2 class="element__title">Усть-Ленский заповедник</h2>
+          <button class="element__like-button"></button>
+        </li>
+
+        <li class="element">
+          <img src="./vendor/images/volga.jpg" alt="Река Волга" class="element__image">
+          <h2 class="element__title">Поволжье</h2>
+          <button class="element__like-button"></button>
+        </li>
+
+        <li class="element">
+          <img src="./vendor/images/karelia.jpg" alt="Карелия" class="element__image">
+          <h2 class="element__title">Карелия</h2>
+          <button class="element__like-button"></button>
+        </li>
+
+      </ul>
   </section>
 
-  <section class="elements">
-    <div class="element">
-      <img src="./vendor/images/baikal.jpg" alt="Байкал Зимой" class="element__image">
-      <h2 class="element__title">Байкал</h2>
-      <button class="element__like-button"></button>
-    </div>
-
-    <div class="element">
-      <img src="./vendor/images/kamchatka.jpg" alt="Камчатка" class="element__image">
-      <h2 class="element__title">Камчатка</h2>
-      <button class="element__like-button"></button>
-    </div>
-
-    <div class="element">
-      <img src="./vendor/images/sakhalin.jpg" alt="Сахалин" class="element__image">
-      <h2 class="element__title">Сахалин</h2>
-      <button class="element__like-button"></button>
-    </div>
-
-    <div class="element">
-      <img src="./vendor/images/ust-lensk.jpg" alt="Усть-Ленский заповедник" class="element__image">
-      <h2 class="element__title">Усть-Ленский заповедник</h2>
-      <button class="element__like-button"></button>
-    </div>
-
-    <div class="element">
-      <img src="./vendor/images/volga.jpg" alt="Река Волга" class="element__image">
-      <h2 class="element__title">Поволжье</h2>
-      <button class="element__like-button"></button>
-    </div>
-
-    <div class="element">
-      <img src="./vendor/images/karelia.jpg" alt="Карелия" class="element__image">
-      <h2 class="element__title">Карелия</h2>
-      <button class="element__like-button"></button>
-    </div>
-
-  </section>
+</main>
 
   <footer class="footer">
-    <p class="footer__info">© 2020 Mesto Russia</p>
+    <p class="footer__info">&copy; 2020 Mesto Russia</p>
   </footer>
+
+  <section class="popup">
+
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form" name="userinfo">
+        <button class="popup__close-button"></button>
+        <input type="text" class="popup__input popup__input_name" value="Жак-Ив Кусто" name="username">
+        <input type="text" class="popup__input popup__input_job" value="Исследователь океана" name="userjob">
+        <button class="popup__submit-button" type="submit">Сохранить</button>
+      </form>
+  </div>
+  </section>
 
   <script src="./scripts/script.js"></script>
 </body>

@@ -12,9 +12,16 @@
   display: inline-block;
 }
 
+@media screen and (max-width: 882px) {
+  .profile__name {
+    max-width: 90%;
+  }
+}
+
+
 @media screen and (max-width: 690px) {
   .profile__name {
-    max-width: 70%;
+    max-width: 60%;
   }
 }
 
