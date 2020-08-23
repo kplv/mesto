@@ -23,3 +23,11 @@
   transform: scale(.95);
   outline: none;
 }
+
+@media screen and (max-width: 540px) {
+  .popup__submit-button {
+    height: 40px;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+}

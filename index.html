@@ -20,6 +20,24 @@
     </form>
   </section>
 
+  <section class="popup">
+    <form class="popup__container">
+      <button class="popup__close-button"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <input type="text" class="popup__input popup__input_place" value="" placeholder="Название">
+      <input type="text" class="popup__input popup__input_image" value="" placeholder="Ссылка на картинку">
+      <button class="popup__submit-button">Создать</button>
+    </form>
+  </section>
+
+  <section class="popup popup_image">
+    <div class="popup__container popup__container_image">
+      <button class="popup__close-button"></button>
+      <img src="./vendor/images/baikal.jpg" alt="Камчатка" class="popup__image">
+      <p class="popup__place">Байкал</p>
+    </div>
+  </section>
+
   <header class="header">
     <img src="./vendor/images/mesto-logo.svg" alt="" class="header__logo">
     <div class="header__divider"></div>
@@ -38,8 +56,9 @@
   </section>
 
   <section class="elements">
-    <div class="element">
-      <img src="./vendor/images/baikal.jpg" alt="Байкал Зимой" class="element__image">
+    <div class="element" href="#">
+      <button class="element__delete-button"></button>
+      <a href="#"><img src="./vendor/images/baikal.jpg" alt="Байкал Зимой" class="element__image"></a>
       <h2 class="element__title">Байкал</h2>
       <button class="element__like-button"></button>
     </div>
