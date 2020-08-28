@@ -1,6 +1,13 @@
 .element__image {
   width: 100%;
+  min-height: 282px;
   height: 282px;
   border-radius: 10px 10px 0 0;
   object-fit: cover;
+  transition: opacity .2s ease;
+}
+
+.element__image:hover {
+  opacity: .8;
+  cursor: pointer;
 }

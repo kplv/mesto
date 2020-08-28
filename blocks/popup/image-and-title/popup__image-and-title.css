@@ -1,4 +1,4 @@
-.popup__container_image {
+.popup__image-and-title {
   margin: auto;
   width: auto;
   max-width: 75vw;
@@ -6,5 +6,5 @@
   max-height: 75vh;
   padding: 0px;
   background-color: transparent;
-  dis
+  display: flex;
 }
