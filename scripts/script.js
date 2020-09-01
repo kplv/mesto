@@ -37,51 +37,33 @@ const profileJob = document.querySelector('.profile__job');
 const nameInput = formElement.querySelector('.popup__input_name');
 const jobInput = formElement.querySelector('.popup__input_job');
 
-const initialCards = [
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 }
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
+  hideAllErrors();
 }
 
 const openEditPopup = () => {
   openPopup(editInfoPopup);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {closePopup(editInfoPopup)};
+  });
 }
 
 const openAddPopup = () => {
   openPopup(addPlacePopup);
   placeInput.value = '';
   imageInput.value = '';
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {closePopup(addPlacePopup)};
+  });
 }
 
 // Функция добавления новых карточек в DOM
@@ -143,6 +125,13 @@ initialCards.forEach(item => addCard(item.name, item.link));
     closePopup(addPlacePopup);
   }
 
-  editForm.addEventListener('submit', updateInfo);
-  placeForm.addEventListener('submit', addPlace)
+  const closeByClick = (evt) => {
+    console.log(evt.target);
+  }
 
+  editForm.addEventListener('submit', updateInfo);
+  placeForm.addEventListener('submit', addPlace);
+
+  document.addEventListener('click', function (evt) {
+    if (evt.target === document.querySelector('.popup_opened')) {evt.target.classList.remove('popup_opened')}
+  });

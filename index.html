@@ -12,39 +12,47 @@
 
   <section class="popup" id="edit-info">
     <div class="popup__view">
-    <form class="popup__container" name="info">
+    <form class="popup__container" name="info" novalidate>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" class="popup__input popup__input_name" value="Жак-Ив Кусто">
-      <input type="text" class="popup__input popup__input_job" value="Исследователь океана">
-      <button class="popup__submit-button" id="submit-info">Сохранить</button>
-    </form>
-    <button class="popup__close-button" id="close-edit-info"></button>
+      <fieldset class="popup__fieldset">
+      <label for="name-input" class="popup__field">
+        <input type="text" class="popup__input popup__input_name" id="name-input" value="Жак-Ив Кусто" required minlength="2" maxlength="40">
+        <span class="popup__input-error" id="name-input-error">Текст ошибки</span>
+    </label>
+    <label for="job-input" class="popup__field">
 
+      <input type="text" class="popup__input popup__input_job" id="job-input" value="Исследователь океана" required minlength="2" maxlength="200">
+      <span class="popup__input-error" id="job-input-error">Текст ошибки</span>
+    </label>
+    <button class="popup__submit-button" id="submit-info">Сохранить</button>
+  </fieldset>
+  </form>
+
+  <button class="popup__close-button" id="close-edit-info"></button>
   </div>
   </section>
 
   <section class="popup" id="add-place">
     <div class="popup__view">
-    <form class="popup__container" name="place">
-
+    <form class="popup__container" name="place" novalidate>
       <h2 class="popup__title">Новое место</h2>
-      <input type="text" class="popup__input popup__input_place" value="" placeholder="Название">
-      <input type="text" class="popup__input popup__input_image" value="" placeholder="Ссылка на картинку">
+      <fieldset class="popup__fieldset">
+        <label for="place-input" class="popup__field">
+        <input type="text" class="popup__input popup__input_place" id="place-input" value="" placeholder="Название" required minlength="1" maxlength="30">
+        <span class="popup__input-error" id="place-input-error">Текст ошибки</span>
+        </label>
+
+      <label for="image-input" class="popup__field">
+      <input type="url" class="popup__input popup__input_image" id="image-input" value="" placeholder="Ссылка на картинку" required>
+      <span class="popup__input-error" id="image-input-error">Текст ошибки</span>
+      </label>
       <button class="popup__submit-button" id="submit-place">Создать</button>
+    </fieldset>
     </form>
-    <button class="popup__close-button" id="close-add-place"></button>
+
+    <button class="popup__close-button"></button>
   </div>
   </section>
-
-<!--   <section class="popup popup_image">
-    <div class="popup__container popup__container_image">
-      <div class="popup__image-and-title">
-        <img src="./vendor/images/baikal.jpg" alt="Камчатка" class="popup__image">
-        <p class="popup__place">Байкал</p>
-      </div>
-      <button class="popup__close-button"></button>
-    </div>
-  </section> -->
 
   <section class="popup" id="popup-view-image">
     <div class="popup_image">
@@ -52,7 +60,7 @@
         <img src="./vendor/images/sakhalin.jpg" alt="" class="popup__image">
         <p class="popup__place">Заголовок картинки</p>
       </div>
-      <button class="popup__close-button" id="close-edit-info"></button>
+      <button class="popup__close-button"></button>
   </div>
   </section>
 
@@ -92,6 +100,8 @@
     </div>
   </template>
 
+  <script src="./scripts/initialCards.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>
