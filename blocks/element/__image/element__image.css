@@ -1,8 +1,13 @@
 .element__image {
   width: 100%;
+  min-width: 100%;
   min-height: 282px;
   height: 282px;
   border-radius: 10px 10px 0 0;
+  background-image: url(../../../vendor/images/no-image.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   object-fit: cover;
   transition: opacity .2s ease;
 }
@@ -11,3 +16,4 @@
   opacity: .8;
   cursor: pointer;
 }
+

@@ -32,3 +32,17 @@
     margin-top: 16px;
   }
 }
+
+.popup__submit-button:disabled {
+  border: 1px solid #000000;
+  opacity: .2;
+  background-color: white;
+  color:black;
+}
+
+.popup__submit-button_inactive:disabled:hover {
+  border: 1px solid #000000;
+  opacity: .2;
+  background-color: white;
+  color:black;
+}

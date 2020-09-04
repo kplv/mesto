@@ -18,7 +18,7 @@ const closeEditPopupButton = editInfoPopup.querySelector('.popup__close-button')
 const closeAddPopupButton = addPlacePopup.querySelector('.popup__close-button');
 const closeViewPopupButton = imagePopup.querySelector('.popup__close-button');
 
-const submitInfoButton = document.querySelector('#submit-info');
+// const submitInfoButton = document.querySelector('#submit-info');
 const submitPlaceButton = document.querySelector('#submit-place');
 const formElement = document.querySelector('.popup__container');
 
@@ -39,21 +39,21 @@ const jobInput = formElement.querySelector('.popup__input_job');
 
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {closePopup(popup)} });
+
 }
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
-  hideAllErrors();
+  hideAllErrors(popup);
 }
 
 const openEditPopup = () => {
   openPopup(editInfoPopup);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {closePopup(editInfoPopup)};
-  });
 }
 
 const openAddPopup = () => {
@@ -66,9 +66,11 @@ const openAddPopup = () => {
   });
 }
 
+
+
 // Функция добавления новых карточек в DOM
 
-const addCard = (name, link, where) => {
+const addCard = (name, link) => {
   const cardTemplate = document.querySelector('#element').content;
   const cardElement = cardTemplate.cloneNode(true);
 
@@ -89,11 +91,27 @@ const addCard = (name, link, where) => {
     popupPlace.textContent = name;
     const eventTarget = evt.target
     popupPhoto.src = eventTarget.src;
-
   });
 
-  if ( where === 'start') {containerCards.prepend(cardElement)} else {containerCards.append(cardElement)};
+  return cardElement;
+}
 
+const addCardByBase = (base) => {
+  base.forEach(item => containerCards.append(addCard(item.name, item.link)))
+}
+
+addCardByBase(initialCards);
+
+const addCardByUser = (name, link) => {
+  containerCards.prepend(addCard(name, link));
+}
+
+const addPlace = (event) => {
+  event.preventDefault();
+  const place = placeInput.value;
+  const image = imageInput.value;
+  addCardByUser(place, image);
+  closePopup(addPlacePopup);
 }
 
 initialCards.forEach(item => addCard(item.name, item.link));
@@ -105,6 +123,7 @@ initialCards.forEach(item => addCard(item.name, item.link));
   // Слушатели для закрытия модалок
   closeEditPopupButton.addEventListener('click', function() {closePopup(editInfoPopup)});
   closeAddPopupButton.addEventListener('click', function() {closePopup(addPlacePopup)});
+  // closeAddPopupButton.addEventListener('click', function() {placeForm.reset()});
   closeViewPopupButton.addEventListener('click', function() {closePopup(imagePopup)});
 
   const updateInfo = (event) => {
@@ -117,21 +136,9 @@ initialCards.forEach(item => addCard(item.name, item.link));
     closePopup(editInfoPopup);
   }
 
-  const addPlace = (event) => {
-    event.preventDefault();
-    const place = placeInput.value;
-    const image = imageInput.value;
-    addCard(place, image, 'start');
-    closePopup(addPlacePopup);
-  }
-
-  const closeByClick = (evt) => {
-    console.log(evt.target);
-  }
-
   editForm.addEventListener('submit', updateInfo);
   placeForm.addEventListener('submit', addPlace);
 
   document.addEventListener('click', function (evt) {
-    if (evt.target === document.querySelector('.popup_opened')) {evt.target.classList.remove('popup_opened')}
+    if (evt.target === document.querySelector('.popup_opened')) {closePopup(evt.target)}
   });
