@@ -1,3 +1,4 @@
+/*
 const showInputError = (formElement, inputElement, errorMessage, {inputErrorClass, errorClass, ...rest}) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add(inputErrorClass);
@@ -56,6 +57,7 @@ const setEventListeners = (formElement, {inputSelector, submitButtonSelector, cl
 const enableValidation = ({formSelector, fieldSetSelector, ...rest}) => {
   const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((formElement) => {
+
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
@@ -91,5 +93,5 @@ enableValidation({
   closeButton: '.popup__close-button',
   popupSelector: '.popup',
   renderPopupSelector: '.profile__add-button'
-});
+}); */
 
