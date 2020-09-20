@@ -88,8 +88,6 @@ const addPlace = (event) => {
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-/* const Validate = new FormValidator ('.popup__container', '.popup__fieldset','.popup__input', '.popup__submit-button', 'popup__input_error', 'popup__input-error_active', '.popup__close-button', '.popup', '.profile__add-button'); */
-
 const data = ({
   formSelector: '.popup__container',
   fieldSetSelector: '.popup__fieldset',
