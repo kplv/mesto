@@ -76,9 +76,18 @@ export default class FormValidator {
       });
     });
 
-    // const renderButton = document.querySelector(this._renderPopupSelector);
-    // renderButton.addEventListener('click', function () {
-    //   button(inputList, buttonElement)});
+  }
+
+  clearErrors() {
+    const errorsInputs = Array.from(document.querySelectorAll(`.${this._inputErrorClass}`));
+  errorsInputs.forEach((el) => {
+    el.classList.remove('popup__input_error');
+  });
+
+  const errors = Array.from(document.querySelectorAll(`.${this._errorClass}`));
+  errors.forEach((error) => {
+    error.classList.remove(this._errorClass);
+  });
 
 
 
@@ -89,12 +98,7 @@ export default class FormValidator {
       this._formElement.addEventListener('submit', function (evt) {
         evt.preventDefault();
       });
-
-      const fieldsetList = Array.from(this._formElement.querySelectorAll(this._fieldSetSelector));
-      fieldsetList.forEach((fieldSet) => {
-      this._setEventListeners(this._formElement, rest);
-  });
-
+      this._setEventListeners();
 
   }
 

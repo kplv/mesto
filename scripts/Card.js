@@ -1,15 +1,16 @@
 export default class Card {
 
-  constructor(title, image) {
+  constructor(title, image, template) {
     this._title = title;
     this._image = image;
+    this._template = template;
   }
 
   get open() { return openPopup(imagePopup); }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector('#element')
+      .querySelector(this._template)
       .content
       .querySelector('.element')
       .cloneNode(true);
@@ -22,6 +23,7 @@ export default class Card {
 
   _handleDelete() {
     this._view.remove();
+    this._view= null;
   }
 
  _handleView() {
@@ -63,12 +65,12 @@ export default class Card {
 
   }
 
-  _render(container, byUser) {
+  get() {
     this._view = this._getTemplate();
     this._view.querySelector('.element__image').src = this._image;
     this._view.querySelector('.element__title').textContent = this._title;
-    if (!byUser) {container.append(this._view)} else {container.prepend(this._view)};
     this._setEventListeners();
+    return this._view;
 }
 
 }

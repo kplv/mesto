@@ -1,10 +1,10 @@
+import {initialCards} from './initialCards.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 const containerCards = document.querySelector('.elements');
 
 const imagePopup = document.querySelector('#popup-view-image');
-
-const popupPlace = imagePopup.querySelector('.popup__place');
-const popupPhoto = imagePopup.querySelector('.popup__image');
 
 const editInfoPopup = document.querySelector('#edit-info');
 const addPlacePopup = document.querySelector('#add-place');
@@ -21,8 +21,6 @@ const closeEditPopupButton = editInfoPopup.querySelector('.popup__close-button')
 const closeAddPopupButton = addPlacePopup.querySelector('.popup__close-button');
 const closeViewPopupButton = imagePopup.querySelector('.popup__close-button');
 
-// const submitInfoButton = document.querySelector('#submit-info');
-const submitPlaceButton = document.querySelector('#submit-place');
 const formElement = document.querySelector('.popup__container');
 
 // Инпуты места и картинки и места для их вставки
@@ -46,47 +44,27 @@ const openPopup = (popup) => {
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
-
-  const errors = Array.from(popup.querySelectorAll('.popup__input-error'));
-  errors.forEach((error) => {
-    error.classList.remove('popup__input-error_active');
-  });
-
-  const errorsInputs = Array.from(popup.querySelectorAll('.popup__input_error'));
-  errorsInputs.forEach((el) => {
-    el.classList.remove('popup__input_error');
-  });
-
+  ValidateEdit.clearErrors();
 }
 
 const openEditPopup = () => {
   openPopup(editInfoPopup);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  ValidateEdit.enableValidation();
 }
 
 const openAddPopup = () => {
   openPopup(addPlacePopup);
-  placeInput.value = '';
-  imageInput.value = '';
-  ValidateAdd.enableValidation();
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {closePopup(addPlacePopup)};
-  });
+  placeForm.reset();
+  placeForm.querySelector('.popup__submit-button').disabled = true;
 }
 
 const addPlace = (event) => {
   event.preventDefault();
-  const card = new Card(placeInput.value, imageInput.value);
-  card._render(containerCards, true);
+  const card = new Card(placeInput.value, imageInput.value, '#element');
+  containerCards.prepend(card.get());
   closePopup(addPlacePopup);
-
 }
-
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
 
 const data = ({
   formSelector: '.popup__container',
@@ -108,8 +86,8 @@ ValidateAdd.enableValidation();
 
 
   initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link);
-  card._render(containerCards);
+  const card = new Card(item.name, item.link, '#element');
+  containerCards.append(card.get());
 });
 
   // Слушатели для открытия модалок
