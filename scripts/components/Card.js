@@ -1,8 +1,8 @@
 export default class Card {
 
-  constructor(title, image, template) {
-    this._title = title;
-    this._image = image;
+  constructor(data, template) {
+    this._title = data.name;
+    this._image = data.link;
     this._template = template;
   }
 

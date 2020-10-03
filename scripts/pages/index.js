@@ -1,8 +1,10 @@
-import {initialCards} from './initialCards.js';
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import {items} from '../utils/constants.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 
 const containerCards = document.querySelector('.elements');
+const cardListSelector = '.elements';
 
 const imagePopup = document.querySelector('#popup-view-image');
 
@@ -61,10 +63,17 @@ const openAddPopup = () => {
 
 const addPlace = (event) => {
   event.preventDefault();
-  const card = new Card(placeInput.value, imageInput.value, '#element');
-  containerCards.prepend(card.get());
+
+  const item = {
+    name: placeInput.value,
+    link: imageInput.value
+  }
+  const card = new Card(item, '#element', containerCards);
+  card.get()
   closePopup(addPlacePopup);
 }
+
+
 
 const data = ({
   formSelector: '.popup__container',
@@ -85,10 +94,18 @@ const ValidateAdd = new FormValidator(data, placeForm);
 ValidateAdd.enableValidation();
 
 
-  initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link, '#element');
-  containerCards.append(card.get());
-});
+const cardList = new Section({
+  data: items,
+  renderer: (item) => {
+    const card = new Card(item, '#element');
+    const cardElement = card.get();
+    cardList.setItem(cardElement);
+  }
+}, cardListSelector);
+
+cardList.renderItems();
+
+
 
   // Слушатели для открытия модалок
   editButton.addEventListener('click', openEditPopup);
