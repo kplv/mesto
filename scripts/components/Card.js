@@ -1,9 +1,10 @@
 export default class Card {
 
-  constructor(data, template) {
+  constructor(data, template, {handleCardClick}) {
     this._title = data.name;
     this._image = data.link;
     this._template = template;
+    this._handleCardClick = handleCardClick;
   }
 
   get open() { return openPopup(imagePopup); }
@@ -26,7 +27,7 @@ export default class Card {
     this._view= null;
   }
 
- _handleView() {
+/*  _handleView() {
 
   const imagePopup = document.querySelector('#popup-view-image');
   const popupPlace = imagePopup.querySelector('.popup__place');
@@ -43,9 +44,10 @@ export default class Card {
   document.addEventListener('click', function (evt) {
       if (evt.target === document.querySelector('.popup_opened')) {document.querySelector('#popup-view-image').classList.remove('popup_opened')}
     });
- }
+ } */
 
   _setEventListeners() {
+
 
     this._likeButton = this._view.querySelector('.element__like-button');
     this._deleteButton = this._view.querySelector('.element__delete-button');
@@ -60,7 +62,7 @@ export default class Card {
     });
 
     this._image.addEventListener('click',() => {
-      this._handleView();
+      this._handleCardClick();
     });
 
   }

@@ -9,9 +9,21 @@ export default class Section {
     this._container.append(element);
   }
 
-  renderItems() {
-    this._renderedItems.forEach(item => {
-      this._renderer(item);
-    });
+  setUserItem(element) {
+    this._container.prepend(element);
   }
+
+  renderItems() {
+    if (Array.isArray(this._renderedItems)) {
+      this._renderedItems.forEach(item => {
+        this._renderer(item);
+      });
+    } else {console.log('one'); this._renderer(this._renderedItems)}
+  }
+
+  /*   renderItems() {
+      console.log(this);
+      console.log(this._renderedItems);
+      // this._renderedItems.forEach.bind(item => {console.log(item)})
+    } */
 }

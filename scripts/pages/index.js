@@ -2,6 +2,8 @@ import {items} from '../utils/constants.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
 const containerCards = document.querySelector('.elements');
 const cardListSelector = '.elements';
@@ -17,11 +19,6 @@ const placeForm = document.forms.place
 // Кнопки редактирования профиля и добавления места
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-
-// Кнопки закрытия всех попапов
-const closeEditPopupButton = editInfoPopup.querySelector('.popup__close-button');
-const closeAddPopupButton = addPlacePopup.querySelector('.popup__close-button');
-const closeViewPopupButton = imagePopup.querySelector('.popup__close-button');
 
 const formElement = document.querySelector('.popup__container');
 
@@ -39,7 +36,7 @@ const jobInput = formElement.querySelector('.popup__input_job');
 
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', function (evt) {
+  document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {closePopup(popup)} });
 
 }
@@ -61,18 +58,44 @@ const openAddPopup = () => {
   placeForm.querySelector('.popup__submit-button').disabled = true;
 }
 
-const addPlace = (event) => {
+/* const addPlace = (event) => {
   event.preventDefault();
-
-  const item = {
+  const formItem = [{
     name: placeInput.value,
     link: imageInput.value
-  }
-  const card = new Card(item, '#element', containerCards);
-  card.get()
-  closePopup(addPlacePopup);
-}
+  }]
 
+  const cardList = new Section({
+    data: formItem,
+    renderer: (item) => {
+      const card = new Card(item, '#element', {handleCardClick: () => {
+        const popup = new PopupWithImage('#popup-view-image');
+        popup.open(item.name, item.link)
+      }});
+      const cardElement = card.get();
+      cardList.setUserItem(cardElement);
+    }
+  }, cardListSelector);
+
+  cardList.renderItems();
+
+  closePopup(addPlacePopup);
+} */
+
+const cardList = new Section({
+  data: items,
+  renderer: (item) => {
+    const card = new Card(item, '#element', {handleCardClick: () => {
+
+      const popup = new PopupWithImage('#popup-view-image');
+      popup.open(item.name, item.link)
+    }});
+    const cardElement = card.get();
+    cardList.setItem(cardElement);
+  }
+}, cardListSelector);
+
+cardList.renderItems();
 
 
 const data = ({
@@ -94,28 +117,10 @@ const ValidateAdd = new FormValidator(data, placeForm);
 ValidateAdd.enableValidation();
 
 
-const cardList = new Section({
-  data: items,
-  renderer: (item) => {
-    const card = new Card(item, '#element');
-    const cardElement = card.get();
-    cardList.setItem(cardElement);
-  }
-}, cardListSelector);
-
-cardList.renderItems();
-
 
 
   // Слушатели для открытия модалок
   editButton.addEventListener('click', openEditPopup);
-  addButton.addEventListener('click', openAddPopup);
-
-  // Слушатели для закрытия модалок
-  closeEditPopupButton.addEventListener('click', function() {closePopup(editInfoPopup)});
-  closeAddPopupButton.addEventListener('click', function() {closePopup(addPlacePopup)});
-  // closeAddPopupButton.addEventListener('click', function() {placeForm.reset()});
-  closeViewPopupButton.addEventListener('click', function() {closePopup(imagePopup)});
 
   const updateInfo = (event) => {
     event.preventDefault();
@@ -127,8 +132,27 @@ cardList.renderItems();
   }
 
   editForm.addEventListener('submit', updateInfo);
-  placeForm.addEventListener('submit', addPlace);
 
-  document.addEventListener('click', function (evt) {
-    if (evt.target === document.querySelector('.popup_opened')) {closePopup(evt.target)}
-  });
+  addButton.addEventListener('click', function() {
+
+    const popup = new PopupWithForm('#add-place', { submit: () => {
+
+      const items = popup.getInputValues();
+
+      const newList = new Section({
+        data: items,
+        renderer: (item) => {
+          const card = new Card(item, '#element', {handleCardClick: () => {
+            const popup = new PopupWithImage('#popup-view-image');
+            popup.open(item.name, item.link)
+          }});
+          const cardElement = card.get();
+          newList.setUserItem(cardElement);
+        }
+      }, cardListSelector);
+
+      newList.renderItems();
+
+    }});
+    popup.open();
+  })
