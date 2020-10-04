@@ -18,12 +18,6 @@ export default class Section {
       this._renderedItems.forEach(item => {
         this._renderer(item);
       });
-    } else {console.log('one'); this._renderer(this._renderedItems)}
+    } else {this._renderer(this._renderedItems)}
   }
-
-  /*   renderItems() {
-      console.log(this);
-      console.log(this._renderedItems);
-      // this._renderedItems.forEach.bind(item => {console.log(item)})
-    } */
 }

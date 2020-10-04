@@ -45,12 +45,22 @@ const data = ({
 const ValidateEdit = new FormValidator(data, editForm);
 ValidateEdit.enableValidation();
 
-function clearEdit(){
+function clearErrors(){
   ValidateEdit.clearErrors();
+}
+
+// Проверка кнопки при открытии
+function editValidate(){
+  ValidateEdit.enableValidation();
 }
 
 const ValidateAdd = new FormValidator(data, placeForm);
 ValidateAdd.enableValidation();
+
+// Проверка кнопки при открытии
+function addValidate(){
+  ValidateAdd.enableValidation();
+}
 
   const popup = new PopupWithForm('#add-place', { submit: () => {
 
@@ -70,7 +80,7 @@ ValidateAdd.enableValidation();
 
     newList.renderItems();
 
-  }}, getUserInfo, setUserInfo);
+  }}, getUserInfo, setUserInfo, clearErrors, addValidate);
 
   addButton.addEventListener('click', function() {
     popup.open();
@@ -88,7 +98,7 @@ ValidateAdd.enableValidation();
 
   const popupEdit = new PopupWithForm('#edit-info',{submit: () =>{
     popupEdit.setUserInfo(popupEdit.getInputValues());
-  }}, getUserInfo, setUserInfo)
+  }}, getUserInfo, setUserInfo, clearErrors, editValidate)
 
   editButton.addEventListener('click',() => {
     popupEdit.open();

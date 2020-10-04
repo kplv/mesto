@@ -1,12 +1,15 @@
+import { throws } from 'assert';
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
 
-  constructor(selector, { submit }, getUserInfo, setUserInfo) {
+  constructor(selector, { submit }, getUserInfo, setUserInfo, clearErrors, validate) {
     super(selector);
     this._submit = submit;
     this.getUserInfo = getUserInfo;
     this.setUserInfo = setUserInfo;
+    this.clearErrors = clearErrors;
+    this.validate = validate;
   }
 
   setEventListeners() {
@@ -20,6 +23,7 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
+    this.clearErrors();
     this._selector.querySelector('.popup__container').reset();
   }
 
@@ -31,26 +35,17 @@ export default class PopupWithForm extends Popup {
   }
 
   setInputValues(data) {
-    console.log(data)
     const nameInput = document.querySelector('.popup__input_name');
     const jobInput = document.querySelector('.popup__input_job');
     nameInput.value = data.name;
     jobInput.value = data.info;
   }
 
-   /*  setInputValues(data) {
-    console.log(data)
-    this._inputList = this._selector.querySelectorAll('.popup__input');
-    this._formValues = {};
-    this._inputList.forEach(input => this._formValues[input.name] = input.value);
-    console.log(this._formValues);
-    this._formValues = data;
-    console.log(this._formValues);
-  } */
 
   open() {
     super.open();
     this.setInputValues(this.getUserInfo());
+    this.validate();
   }
 
 }
