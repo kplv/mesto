@@ -128,7 +128,31 @@ ValidateAdd.enableValidation();
 
   // editForm.addEventListener('submit', updateInfo);
 
+  const popup = new PopupWithForm('#add-place', { submit: () => {
+
+    const items = popup.getInputValues();
+
+    const newList = new Section({
+      data: items,
+      renderer: (item) => {
+        const card = new Card(item, '#element', {handleCardClick: () => {
+          const popup = new PopupWithImage('#popup-view-image');
+          popup.open(item.name, item.link)
+        }});
+        const cardElement = card.get();
+        newList.setUserItem(cardElement);
+      }
+    }, cardListSelector);
+
+    newList.renderItems();
+
+  }}, getUserInfo, setUserInfo);
+
   addButton.addEventListener('click', function() {
+    popup.open();
+  })
+
+/*   addButton.addEventListener('click', function() {
 
     const popup = new PopupWithForm('#add-place', { submit: () => {
 
@@ -148,9 +172,9 @@ ValidateAdd.enableValidation();
 
       newList.renderItems();
 
-    }}, getUserInfo, setUserInfo(newName, newInfo));
+    }}, getUserInfo, setUserInfo);
     popup.open();
-  })
+  }) */
 
   const userInfo = new UserInfo('.profile__name', '.profile__job');
   // console.log(userInfo.getUserInfo());

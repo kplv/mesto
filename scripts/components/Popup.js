@@ -1,11 +1,11 @@
 export default class Popup {
   constructor(selector) {
     this._selector = document.querySelector(selector);
+    this.setEventListeners();
   }
 
   open() {
     this._selector.classList.add('popup_opened')
-    this.setEventListeners();
   }
 
   close() {
