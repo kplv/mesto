@@ -4,6 +4,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
 const containerCards = document.querySelector('.elements');
 const cardListSelector = '.elements';
@@ -44,12 +45,6 @@ const openPopup = (popup) => {
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
   ValidateEdit.clearErrors();
-}
-
-const openEditPopup = () => {
-  openPopup(editInfoPopup);
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
 }
 
 const openAddPopup = () => {
@@ -120,18 +115,18 @@ ValidateAdd.enableValidation();
 
 
   // Слушатели для открытия модалок
-  editButton.addEventListener('click', openEditPopup);
+  // editButton.addEventListener('click', openEditPopup);
 
-  const updateInfo = (event) => {
+ /*  const updateInfo = (event) => {
     event.preventDefault();
     const name = nameInput.value;
     const job = jobInput.value;
     profileName.textContent = name;
     profileJob.textContent = job;
     closePopup(editInfoPopup);
-  }
+  } */
 
-  editForm.addEventListener('submit', updateInfo);
+  // editForm.addEventListener('submit', updateInfo);
 
   addButton.addEventListener('click', function() {
 
@@ -153,6 +148,29 @@ ValidateAdd.enableValidation();
 
       newList.renderItems();
 
-    }});
+    }}, getUserInfo, setUserInfo(newName, newInfo));
     popup.open();
   })
+
+  const userInfo = new UserInfo('.profile__name', '.profile__job');
+  // console.log(userInfo.getUserInfo());
+  userInfo.setUserInfo({name: 'Гвоздь', info: 'Работник зала'});
+
+  function getUserInfo(){
+    return userInfo.getUserInfo();
+  }
+
+  function setUserInfo(data){
+    userInfo.setUserInfo(data);
+  }
+
+  const popupEdit = new PopupWithForm('#edit-info',{submit: () =>{
+    popupEdit.setUserInfo(popupEdit.getInputValues());
+    // console.log(popupEdit.getInputValues())
+    console.log('один раз');
+  }}, getUserInfo, setUserInfo)
+
+  editButton.addEventListener('click',() => {
+    popupEdit.open();
+  })
+
