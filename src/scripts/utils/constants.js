@@ -24,3 +24,12 @@ export const items = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+export const cardListSelector = '.elements';
+
+export const editForm = document.forms.info
+export const placeForm = document.forms.place
+
+// Кнопки редактирования профиля и добавления места
+export const editButton = document.querySelector('.profile__edit-button');
+export const addButton = document.querySelector('.profile__add-button');
