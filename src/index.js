@@ -12,7 +12,7 @@ import {
   editForm,
   placeForm,
   editButton,
-  addButton
+  addButton,
 } from './scripts/utils/constants.js';
 
 const cardList = new Section({
@@ -22,9 +22,10 @@ const cardList = new Section({
 
       const popup = new PopupWithImage('#popup-view-image');
       popup.open(item.name, item.link)
+      popup.setEventListeners()
     }});
     const cardElement = card.get();
-    cardList.setItem(cardElement);
+    cardList.appendItem(cardElement);
   }
 }, cardListSelector);
 
@@ -62,7 +63,7 @@ function addValidate(){
   ValidateAdd.enableValidation();
 }
 
-  const popup = new PopupWithForm('#add-place', { submit: () => {
+  const popup = new PopupWithForm('#add-place', {submit: () => {
 
     const items = popup.getInputValues();
 
@@ -72,18 +73,22 @@ function addValidate(){
         const card = new Card(item, '#element', {handleCardClick: () => {
           const popup = new PopupWithImage('#popup-view-image');
           popup.open(item.name, item.link)
+          popup.setEventListeners();
         }});
         const cardElement = card.get();
-        newList.setUserItem(cardElement);
+        newList.prependItem(cardElement);
       }
     }, cardListSelector);
 
     newList.renderItems();
 
-  }}, getUserInfo, setUserInfo, clearErrors, addValidate);
+  }});
+  popup.setEventListeners();
 
   addButton.addEventListener('click', function() {
     popup.open();
+    ValidateAdd.enableValidation();
+    ValidateAdd.clearErrors();
   })
 
   const userInfo = new UserInfo('.profile__name', '.profile__job');
@@ -97,10 +102,16 @@ function addValidate(){
   }
 
   const popupEdit = new PopupWithForm('#edit-info',{submit: () =>{
-    popupEdit.setUserInfo(popupEdit.getInputValues());
-  }}, getUserInfo, setUserInfo, clearErrors, editValidate)
+    userInfo.setUserInfo(popupEdit.getInputValues());
+  }})
+  popupEdit.setEventListeners();
+
 
   editButton.addEventListener('click',() => {
+    popupEdit.setInputValues(userInfo.getUserInfo());
     popupEdit.open();
+    // Проверка при открытии модального кона
+    ValidateEdit.enableValidation();
+    ValidateEdit.clearErrors();
   })
 

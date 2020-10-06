@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.html",
   "scripts": {
-    "build": "rm -rf dist && webpack",
+    "build": "rimraf -rf dist && webpack",
     "dev": "webpack-dev-server --open",
     "deploy": "gh-pages -d dist"
   },
@@ -37,6 +37,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "core-js": "^3.6.5"
+    "core-js": "^3.6.5",
+    "rimraf": "^3.0.2"
   }
 }
