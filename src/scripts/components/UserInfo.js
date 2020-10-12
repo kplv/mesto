@@ -1,18 +1,17 @@
 export default class Section {
-  constructor(name, info) {
+  constructor(name, about) {
     this.name = document.querySelector(name);
-    this.info = document.querySelector(info);
+    this.about = document.querySelector(about);
   }
 
   getUserInfo() {
-    return this.obj = { name: this.name.textContent, info: this.info.textContent };
+    return this.obj = { name: this.name.textContent, about: this.about.textContent };
   }
 
   setUserInfo(data) {
     this.name.textContent = data.name;
-    this.info.textContent = data.info;
+    this.about.textContent = data.about;
   }
 
-  // console() {console.log(this.name, this.info)}
 
 }

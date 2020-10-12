@@ -26,6 +26,7 @@ export const items = [
 ];
 
 export const cardListSelector = '.elements';
+export const avatar = document.querySelector('.profile__avatar')
 
 export const editForm = document.forms.info
 export const placeForm = document.forms.place

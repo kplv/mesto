@@ -32,7 +32,7 @@ export default class PopupWithForm extends Popup {
     const nameInput = document.querySelector('.popup__input_name');
     const jobInput = document.querySelector('.popup__input_job');
     nameInput.value = data.name;
-    jobInput.value = data.info;
+    jobInput.value = data.about;
   };
 
 }
