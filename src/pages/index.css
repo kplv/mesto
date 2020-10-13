@@ -41,3 +41,7 @@
 @import url('../blocks/popup/__image-container/popup__image-container.css');
 @import url('../blocks/popup/__container/_image/popup__container_image.css');
 @import url('../blocks/page/__fade-in/page__fade-in.css');
+@import url('../blocks/element/__likes/element__likes.css');
+@import url('../blocks/element/__like-controls/element__like-controls.css');
+
+

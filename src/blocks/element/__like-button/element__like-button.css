@@ -8,9 +8,6 @@
   background-position: center;
   background-size: contain;
   transition: opacity .3s ease, transform .2s ease;
-  position: absolute;
-  bottom: 32px;
-  right: 20px;
 }
 
 
