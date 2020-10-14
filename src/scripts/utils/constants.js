@@ -30,6 +30,7 @@ export const avatar = document.querySelector('.profile__avatar')
 
 export const editForm = document.forms.info
 export const placeForm = document.forms.place
+export const updateForm = document.forms.update
 
 // Кнопки редактирования профиля и добавления места
 export const editButton = document.querySelector('.profile__edit-button');

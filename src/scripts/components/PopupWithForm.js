@@ -34,5 +34,4 @@ export default class PopupWithForm extends Popup {
     nameInput.value = data.name;
     jobInput.value = data.about;
   };
-
 }

@@ -1,10 +1,14 @@
 export default class Popup {
   constructor(selector) {
     this._selector = document.querySelector(selector);
+    this._submitButton = this._selector.querySelector('.popup__submit-button')
+    this._InitialText = this._selector.querySelector('.popup__submit-button').textContent;
   }
 
   open() {
-    this._selector.classList.add('popup_opened')
+    this._selector.classList.add('popup_opened');
+    // const submitButton = this._selector.querySelector('.popup__submit-button')
+    // submitButton.textContent = 'Сохранить'
   }
 
   close() {
@@ -20,6 +24,15 @@ export default class Popup {
     document.addEventListener('click', (evt) => {
       if (evt.target === document.querySelector('.popup_opened')) {this.close()}
     });
+  }
+
+  loading() {
+    this._selector.querySelector('.popup__submit-button').textContent = 'Сохранение…'
+    console.log(this._selector.querySelector('.popup__submit-button').textContent)
+  }
+
+  loaded() {
+    this._selector.querySelector('.popup__submit-button').textContent = this._InitialText
   }
 
   setEventListeners() {

@@ -8,6 +8,16 @@ import UserInfo from './scripts/components/UserInfo.js';
 import Api from './scripts/components/Api.js';
 import './pages/index.css'
 
+import {
+  cardListSelector,
+  editForm,
+  placeForm,
+  updateForm,
+  editButton,
+  addButton,
+  avatar
+} from './scripts/utils/constants.js';
+
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-16',
   headers: {
@@ -16,41 +26,12 @@ const api = new Api({
   }
 });
 
-const updateForm = document.forms.update
-const updateAvaButton = document.querySelector('.profile__button-update');
-const updateAvaPopup = new PopupWithForm('#popup-update-ava',{submit: () => {
-  console.log('submit new photo');
-  // console.log(updateForm.querySelector('#ava-input').value)
-  api.updatePhotoCard(updateForm.querySelector('#ava-input').value).then((res) => {avatar.src = res.avatar;})
-
-}})
-updateAvaPopup.setEventListeners();
-
-/* const ValidateUpdateAva = new FormValidator(data, updateForm);
-ValidateUpdateAva.enableValidation(); */
-
-updateAvaButton.addEventListener('click', () => {
-
-  updateAvaPopup.open();
-  // Проверка при открытии модального кона
-/*   ValidateUpdateAva.enableValidation();
-  ValidateUpdateAva.clearErrors(); */
-})
-
-import {
-  cardListSelector,
-  editForm,
-  placeForm,
-  editButton,
-  addButton,
-  avatar
-} from './scripts/utils/constants.js';
-
 
 api.getUserInfo().then((res) => {
   setUserInfo(res);
   avatar.src = res.avatar;
-});
+})
+.catch(err => renderError(`Ошибка:${err}`));
 
 
 
@@ -78,6 +59,7 @@ api.getAllCards().then((res) => {
                 console.log(res);
                 card._delete();
               })
+              .catch(err => renderError(`Ошибка:${err}`))
 
             }
           })
@@ -97,28 +79,16 @@ api.getAllCards().then((res) => {
               card._likeCounter.textContent = Object.keys(res.likes).length;
               console.log('дислайк')
             })
+            .catch(err => renderError(`Ошибка:${err}`))
           } else {
             api.likeCard(item).then((res) => {
               card._like()
               card._likeCounter.textContent = Object.keys(res.likes).length;
               console.log('лайк')
             })
+            .catch(err => renderError(`Ошибка:${err}`))
 
           }
-
-/*           api.getUserInfo().then((res) => {
-
-            card._like();
-            api.likeCard(item).then((res) => {
-              card._likeCounter.textContent = Object.keys(res.likes).length;
-            })
-
-            if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
-
-          }); */
-
-
-
 
         }
         // Проверка клика кончилась
@@ -136,7 +106,7 @@ api.getAllCards().then((res) => {
 
 
 
-      });
+      }).catch(err => renderError(`Ошибка:${err}`));
 
       const cardElement = card.get();
 
@@ -153,25 +123,11 @@ api.getAllCards().then((res) => {
   cardList.renderItems();
 
 
-});
+}).catch(err => renderError(`Ошибка:${err}`));
 
 
 
-/* const cardList = new Section({
-  data: items,
-  renderer: (item) => {
-    const card = new Card(item, '#element', {handleCardClick: () => {
 
-      const popup = new PopupWithImage('#popup-view-image');
-      popup.open(item.name, item.link)
-      popup.setEventListeners()
-    }});
-    const cardElement = card.get();
-    cardList.appendItem(cardElement);
-  }
-}, cardListSelector);
-
-cardList.renderItems(); */
 
 const data = ({
   formSelector: '.popup__container',
@@ -184,6 +140,8 @@ const data = ({
   popupSelector: '.popup',
   renderPopupSelector: '.profile__add-button'
 });
+
+
 
 const ValidateEdit = new FormValidator(data, editForm);
 ValidateEdit.enableValidation();
@@ -208,6 +166,7 @@ function addValidate() {
 const popup = new PopupWithForm('#add-place', {
   submit: () => {
 
+    popup.loading()
     const apiAddPlace = new Api({
       url: 'https://mesto.nomoreparties.co/v1/cohort-16',
       headers: {
@@ -243,6 +202,7 @@ const popup = new PopupWithForm('#add-place', {
                     console.log(res);
                     card._delete();
                   })
+                  .catch(err => renderError(`Ошибка:${err}`))
 
                 }
               })
@@ -262,35 +222,23 @@ const popup = new PopupWithForm('#add-place', {
                   card._likeCounter.textContent = Object.keys(res.likes).length;
                   console.log('дислайк')
                 })
+                .catch(err => renderError(`Ошибка:${err}`))
               } else {
                 api.likeCard(item).then((res) => {
                   card._like()
                   card._likeCounter.textContent = Object.keys(res.likes).length;
                   console.log('лайк')
                 })
+                .catch(err => renderError(`Ошибка:${err}`))
 
               }
-
-    /*           api.getUserInfo().then((res) => {
-
-                card._like();
-                api.likeCard(item).then((res) => {
-                  card._likeCounter.textContent = Object.keys(res.likes).length;
-                })
-
-                if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
-
-              }); */
-
-
-
 
             }
             // Проверка клика кончилась
           });
 
           api.getUserInfo().then((res) => {
-            if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
+            if (res._id === item.owner._id) {} else { card._deleteButton.style.visibility = "hidden" };
 
             if (item.likes.some(owner => owner.name === res.name)) {
               card._like();
@@ -301,7 +249,8 @@ const popup = new PopupWithForm('#add-place', {
 
 
 
-          });
+          })
+          .catch(err => renderError(`Ошибка:${err}`));
 
           const cardElement = card.get();
 
@@ -318,24 +267,8 @@ const popup = new PopupWithForm('#add-place', {
       cardList.renderItems();
 
 
-    })
-
-
-    /*     const newList = new Section({
-          data: items,
-          renderer: (item) => {
-            const card = new Card(item, '#element', {handleCardClick: () => {
-              const popup = new PopupWithImage('#popup-view-image');
-              popup.open(item.name, item.link)
-              popup.setEventListeners();
-            }});
-            const cardElement = card.get();
-            newList.prependItem(cardElement);
-          }
-        }, cardListSelector);
-
-        newList.renderItems(); */
-
+    }).catch(err => renderError(`Ошибка:${err}`))
+    .finally(popup.loaded());
   }
 });
 popup.setEventListeners();
@@ -359,6 +292,7 @@ function setUserInfo(data) {
 const popupEdit = new PopupWithForm('#edit-info', {
   submit: () => {
 
+    popupEdit.loading();
     const apiUpdateInfo = new Api({
       url: 'https://mesto.nomoreparties.co/v1/cohort-16',
       headers: {
@@ -372,7 +306,8 @@ const popupEdit = new PopupWithForm('#edit-info', {
     api.getUserInfo().then((res) => {
       setUserInfo(res);
       avatar.src = res.avatar;
-    });
+    })
+    .catch(err => renderError(`Ошибка:${err}`));
 
   }
 })
@@ -387,3 +322,28 @@ editButton.addEventListener('click', () => {
   ValidateEdit.clearErrors();
 })
 
+const updateAvaButton = document.querySelector('.profile__button-update');
+
+const ValidateUpdate = new FormValidator(data, updateForm);
+ValidateUpdate.enableValidation();
+
+console.log(editForm, placeForm, updateForm)
+
+const updateAvaPopup = new PopupWithForm('#popup-update-ava',{submit: () => {
+  updateAvaPopup.loading();
+  api.updatePhotoCard(updateForm.querySelector('#ava-input').value).then((res) => {avatar.src = res.avatar;})
+  .catch(err => renderError(`Ошибка:${err}`))
+  .finally(updateAvaPopup.loaded());
+}})
+
+updateAvaPopup.setEventListeners();
+
+
+
+
+updateAvaButton.addEventListener('click', () => {
+  updateAvaPopup.open();
+    // Проверка при открытии модального кона
+    ValidateUpdate.enableValidation();
+    ValidateUpdate.clearErrors();
+})

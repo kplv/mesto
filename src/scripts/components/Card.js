@@ -55,6 +55,7 @@ export default class Card {
 
   }
 
+
   get() {
     this._view = this._getTemplate();
     this._view.querySelector('.element__image').src = this._image;
