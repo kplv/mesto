@@ -83,5 +83,30 @@ export default class Api {
     })
   }
 
+  dislikeCard(data) {
+    return fetch(`${this._url}/cards/likes/${data._id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
+      } return Promise.reject()
+    })
+  }
+
+  updatePhotoCard(data) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data,
+      })
+    }).then((res) => {
+
+      if (res.ok) {
+        return res.json()
+      } return Promise.reject()
+    })
+  }
 
 }

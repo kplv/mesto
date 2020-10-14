@@ -11,6 +11,24 @@
 
 <body class="page">
 
+  <section class="popup" id="popup-update-ava">
+    <div class="popup__view">
+      <form class="popup__container" name="update" novalidate>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <fieldset class="popup__fieldset">
+          <label for="image-input" class="popup__field">
+            <input type="url" class="popup__input" id="ava-input" name="link" value=""
+              placeholder="Ссылка на новый аватар" required>
+            <span class="popup__input-error" id="image-input-error">Текст ошибки</span>
+          </label>
+          <button class="popup__submit-button" id="submit-place">Сохранить</button>
+        </fieldset>
+      </form>
+
+      <button class="popup__close-button"></button>
+    </div>
+  </section>
+
   <section class="popup " id="popup-delete-image">
     <div class="popup__view">
       <form class="popup__container" name="delete" novalidate>
@@ -23,6 +41,8 @@
       <button class="popup__close-button" id="close-edit-info"></button>
     </div>
   </section>
+
+
 
   <section class="popup" id="edit-info">
     <div class="popup__view">
@@ -88,7 +108,10 @@
   <main>
 
     <section class="profile">
-      <img src="./vendor/images/profile.png" alt="Фото профиля" class="profile__avatar">
+      <div class="profile__image">
+        <button class="profile__button-update"></button>
+        <img src="./vendor/images/profile.png" alt="Фото профиля" class="profile__avatar">
+      </div>
       <div class="profile__info">
         <div class="profile__name-controls">
           <h1 class="profile__name">Имя пользователя</h1>

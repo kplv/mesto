@@ -16,6 +16,26 @@ const api = new Api({
   }
 });
 
+const updateForm = document.forms.update
+const updateAvaButton = document.querySelector('.profile__button-update');
+const updateAvaPopup = new PopupWithForm('#popup-update-ava',{submit: () => {
+  console.log('submit new photo');
+  // console.log(updateForm.querySelector('#ava-input').value)
+  api.updatePhotoCard(updateForm.querySelector('#ava-input').value).then((res) => {avatar.src = res.avatar;})
+
+}})
+updateAvaPopup.setEventListeners();
+
+/* const ValidateUpdateAva = new FormValidator(data, updateForm);
+ValidateUpdateAva.enableValidation(); */
+
+updateAvaButton.addEventListener('click', () => {
+
+  updateAvaPopup.open();
+  // Проверка при открытии модального кона
+/*   ValidateUpdateAva.enableValidation();
+  ValidateUpdateAva.clearErrors(); */
+})
 
 import {
   cardListSelector,
@@ -40,12 +60,7 @@ api.getAllCards().then((res) => {
     data: res,
     renderer: (item) => {
 
-      api.getUserInfo().then((res) => {
-        if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
 
-        if (item.likes.some(owner => owner.name === res.name)) {console.log(item)}
-
-      });
 
       const card = new Card(item, '#element', api, {
         handleCardClick: () => {
@@ -76,21 +91,55 @@ api.getAllCards().then((res) => {
         },
         handleLikeClick: () => {
 
-          api.getUserInfo().then((res) => {
+          if (item.likes.some(owner => owner.name !== res.name)) {
+            api.dislikeCard(item).then((res)=> {
+              card._like();
+              card._likeCounter.textContent = Object.keys(res.likes).length;
+              console.log('дислайк')
+            })
+          } else {
+            api.likeCard(item).then((res) => {
+              card._like()
+              card._likeCounter.textContent = Object.keys(res.likes).length;
+              console.log('лайк')
+            })
 
-          });
+          }
+
+/*           api.getUserInfo().then((res) => {
+
+            card._like();
+            api.likeCard(item).then((res) => {
+              card._likeCounter.textContent = Object.keys(res.likes).length;
+            })
+
+            if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
+
+          }); */
 
 
-          card._like();
-          api.likeCard(item).then((res) => {
 
-            card._likeCounter.textContent = Object.keys(res.likes).length;
-
-          })
 
         }
+        // Проверка клика кончилась
       });
+
+      api.getUserInfo().then((res) => {
+        if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
+
+        if (item.likes.some(owner => owner.name === res.name)) {
+          card._like();
+        } else {
+
+        }
+
+
+
+
+      });
+
       const cardElement = card.get();
+
 
       cardList.appendItem(cardElement);
 
@@ -176,9 +225,7 @@ const popup = new PopupWithForm('#add-place', {
         data: res,
         renderer: (item) => {
 
-          api.getUserInfo().then((res) => {
-            if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" }
-          });
+
 
           const card = new Card(item, '#element', api, {
             handleCardClick: () => {
@@ -192,7 +239,6 @@ const popup = new PopupWithForm('#add-place', {
 
               const deletePopup = new PopupWithForm('#popup-delete-image', {
                 submit: () => {
-
                   api.deleteCard(item).then((res) => {
                     console.log(res);
                     card._delete();
@@ -207,11 +253,58 @@ const popup = new PopupWithForm('#add-place', {
 
 
 
+            },
+            handleLikeClick: () => {
+
+              if (item.likes.some(owner => owner.name !== res.name)) {
+                api.dislikeCard(item).then((res)=> {
+                  card._like();
+                  card._likeCounter.textContent = Object.keys(res.likes).length;
+                  console.log('дислайк')
+                })
+              } else {
+                api.likeCard(item).then((res) => {
+                  card._like()
+                  card._likeCounter.textContent = Object.keys(res.likes).length;
+                  console.log('лайк')
+                })
+
+              }
+
+    /*           api.getUserInfo().then((res) => {
+
+                card._like();
+                api.likeCard(item).then((res) => {
+                  card._likeCounter.textContent = Object.keys(res.likes).length;
+                })
+
+                if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
+
+              }); */
+
+
 
 
             }
+            // Проверка клика кончилась
           });
+
+          api.getUserInfo().then((res) => {
+            if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
+
+            if (item.likes.some(owner => owner.name === res.name)) {
+              card._like();
+            } else {
+
+            }
+
+
+
+
+          });
+
           const cardElement = card.get();
+
 
           cardList.prependItem(cardElement);
 
@@ -223,6 +316,7 @@ const popup = new PopupWithForm('#add-place', {
       }, cardListSelector);
 
       cardList.renderItems();
+
 
     })
 
