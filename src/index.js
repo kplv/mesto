@@ -73,15 +73,19 @@ api.getAllCards().then((res) => {
 
             api.dislikeCard(item).then((res) => {
               card._like();
-              card._likeCounter.textContent = Object.keys(res.likes).length;
+              console.log(res);
               item.likes = res.likes;
+              // card._likeCounter.textContent = Object.keys(item).length;
+              console.log(item.likes)
             })
               .catch(err => console.log(err))
           } else {
             api.likeCard(item).then((res) => {
               card._like()
-              card._likeCounter.textContent = Object.keys(res.likes).length;
+              console.log(res);
               item.likes = res.likes;
+              // card._likeCounter.textContent = Object.keys(item).length;
+              console.log(item.likes)
             })
               .catch(err => console.log(err))
 
@@ -296,13 +300,12 @@ const popupEdit = new PopupWithForm('#edit-info', {
       }
     });
 
-    apiUpdateInfo.updateUserInfo(popupEdit.getInputValues()).then((res) => { console.log(res) });
-
-    api.getUserInfo().then((res) => {
+    apiUpdateInfo.updateUserInfo(popupEdit.getInputValues()).then((res) => {
+      console.log(res);
       setUserInfo(res);
       avatar.src = res.avatar;
-    })
-      .catch(err => console.log(err));
+    }).catch(err => console.log(err)).finally(popupEdit.loaded())
+
 
   }
 })
