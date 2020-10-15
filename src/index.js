@@ -26,7 +26,6 @@ const api = new Api({
   }
 });
 
-
 api.getUserInfo().then((res) => {
   setUserInfo(res);
   avatar.src = res.avatar;
@@ -69,41 +68,45 @@ api.getAllCards().then((res) => {
         },
         handleLikeClick: () => {
 
-          if (item.likes.some(owner => owner.name !== res.name)) {
+          api.getUserInfo().then((res) => {
 
-            api.dislikeCard(item).then((res) => {
-              card._like();
-              console.log(res);
-              item.likes = res.likes;
-              // card._likeCounter.textContent = Object.keys(item).length;
-              console.log(item.likes)
-            })
-              .catch(err => console.log(err))
-          } else {
-            api.likeCard(item).then((res) => {
-              card._like()
-              console.log(res);
-              item.likes = res.likes;
-              // card._likeCounter.textContent = Object.keys(item).length;
-              console.log(item.likes)
-            })
-              .catch(err => console.log(err))
+            if (item.likes.some(e => e.name === res.name)) {
 
-          }
+              api.dislikeCard(item).then((res) => {
+                console.log('дислайк')
+                card._like()
+                item.likes = res.likes;
+                console.log(res.likes)
+                card._view.querySelector('.element__likes').textContent = Object.keys(item.likes).length
+              }).catch(err => console.log(err))
+
+            } else {
+
+              api.likeCard(item).then((res) => {
+                console.log('лайк')
+                card._like()
+                item.likes = res.likes;
+                console.log(res.likes)
+                card._view.querySelector('.element__likes').textContent = Object.keys(item.likes).length
+              }).catch(err => console.log(err))
+
+            }
+
+          })
+
+
+        }
 
         }
         // Проверка клика кончилась
-      });
+      );
 
       api.getUserInfo().then((res) => {
-        if (res._id === item.owner._id) { console.log('true') } else { card._deleteButton.style.visibility = "hidden" };
+        if (res._id === item.owner._id) {} else { card._deleteButton.style.visibility = "hidden" };
 
         if (item.likes.some(owner => owner.name === res.name)) {
           card._like();
         } else {}
-
-
-
 
       }).catch(err => console.log(err));
 
@@ -215,41 +218,48 @@ const popup = new PopupWithForm('#add-place', {
             },
             handleLikeClick: () => {
 
-              if (item.likes.some(owner => owner.name !== res.name)) {
-                api.dislikeCard(item).then((res) => {
-                  card._like();
-                  card._likeCounter.textContent = Object.keys(res.likes).length;
-                  item.likes = res.likes;
-                })
-                  .catch(err => console.log(err))
-              } else {
-                api.likeCard(item).then((res) => {
-                  card._like()
-                  card._likeCounter.textContent = Object.keys(res.likes).length;
-                  item.likes = res.likes;
-                })
-                  .catch(err => console.log(err))
+              api.getUserInfo().then((res) => {
 
-              }
+                if (item.likes.some(e => e.name === res.name)) {
+
+                  api.dislikeCard(item).then((res) => {
+                    console.log('дислайк')
+                    card._like()
+                    item.likes = res.likes;
+                    console.log(res.likes)
+                    card._view.querySelector('.element__likes').textContent = Object.keys(item.likes).length
+                  }).catch(err => console.log(err))
+
+                } else {
+
+                  api.likeCard(item).then((res) => {
+                    console.log('лайк')
+                    card._like()
+                    item.likes = res.likes;
+                    console.log(res.likes)
+                    card._view.querySelector('.element__likes').textContent = Object.keys(item.likes).length
+                  }).catch(err => console.log(err))
+
+                }
+
+              })
+
+
+            }
 
             }
             // Проверка клика кончилась
-          });
+          );
 
           api.getUserInfo().then((res) => {
-            if (res._id === item.owner._id) { } else { card._deleteButton.style.visibility = "hidden" };
+            if (res._id === item.owner._id) {} else { card._deleteButton.style.visibility = "hidden" };
 
             if (item.likes.some(owner => owner.name === res.name)) {
               card._like();
-            } else {
+            } else {}
 
-            }
+          }).catch(err => console.log(err));
 
-
-
-
-          })
-            .catch(err => console.log(err));
 
           const cardElement = card.get();
 
