@@ -5,6 +5,7 @@ export default class PopupWithForm extends Popup {
   constructor(selector, {submit}) {
     super(selector);
     this._submit = submit;
+    this._InitialText = this._selector.querySelector('.popup__submit-button').textContent;
   }
 
   setEventListeners() {
@@ -34,4 +35,14 @@ export default class PopupWithForm extends Popup {
     nameInput.value = data.name;
     jobInput.value = data.about;
   };
+
+  loading() {
+    this._selector.querySelector('.popup__submit-button').textContent = 'Сохранение…'
+    console.log(this._selector.querySelector('.popup__submit-button').textContent)
+  }
+
+  loaded() {
+    this._selector.querySelector('.popup__submit-button').textContent = this._InitialText
+  }
+
 }

@@ -31,7 +31,7 @@ api.getUserInfo().then((res) => {
   setUserInfo(res);
   avatar.src = res.avatar;
 })
-.catch(err => renderError(`Ошибка:${err}`));
+  .catch(err => console.log(err));
 
 
 
@@ -41,25 +41,21 @@ api.getAllCards().then((res) => {
     data: res,
     renderer: (item) => {
 
-
-
       const card = new Card(item, '#element', api, {
         handleCardClick: () => {
-
           const popup = new PopupWithImage('#popup-view-image');
           popup.open(item.name, item.link)
           popup.setEventListeners()
         },
 
         handleDeleteClick: () => {
-
           const deletePopup = new PopupWithForm('#popup-delete-image', {
             submit: () => {
               api.deleteCard(item).then((res) => {
                 console.log(res);
                 card._delete();
               })
-              .catch(err => renderError(`Ошибка:${err}`))
+                .catch(err => console.log(err))
 
             }
           })
@@ -74,19 +70,20 @@ api.getAllCards().then((res) => {
         handleLikeClick: () => {
 
           if (item.likes.some(owner => owner.name !== res.name)) {
-            api.dislikeCard(item).then((res)=> {
+
+            api.dislikeCard(item).then((res) => {
               card._like();
               card._likeCounter.textContent = Object.keys(res.likes).length;
-              console.log('дислайк')
+              item.likes = res.likes;
             })
-            .catch(err => renderError(`Ошибка:${err}`))
+              .catch(err => console.log(err))
           } else {
             api.likeCard(item).then((res) => {
               card._like()
               card._likeCounter.textContent = Object.keys(res.likes).length;
-              console.log('лайк')
+              item.likes = res.likes;
             })
-            .catch(err => renderError(`Ошибка:${err}`))
+              .catch(err => console.log(err))
 
           }
 
@@ -99,14 +96,12 @@ api.getAllCards().then((res) => {
 
         if (item.likes.some(owner => owner.name === res.name)) {
           card._like();
-        } else {
-
-        }
+        } else {}
 
 
 
 
-      }).catch(err => renderError(`Ошибка:${err}`));
+      }).catch(err => console.log(err));
 
       const cardElement = card.get();
 
@@ -123,7 +118,7 @@ api.getAllCards().then((res) => {
   cardList.renderItems();
 
 
-}).catch(err => renderError(`Ошибка:${err}`));
+}).catch(err => console.log(err));
 
 
 
@@ -202,7 +197,7 @@ const popup = new PopupWithForm('#add-place', {
                     console.log(res);
                     card._delete();
                   })
-                  .catch(err => renderError(`Ошибка:${err}`))
+                    .catch(err => console.log(err))
 
                 }
               })
@@ -217,19 +212,19 @@ const popup = new PopupWithForm('#add-place', {
             handleLikeClick: () => {
 
               if (item.likes.some(owner => owner.name !== res.name)) {
-                api.dislikeCard(item).then((res)=> {
+                api.dislikeCard(item).then((res) => {
                   card._like();
                   card._likeCounter.textContent = Object.keys(res.likes).length;
-                  console.log('дислайк')
+                  item.likes = res.likes;
                 })
-                .catch(err => renderError(`Ошибка:${err}`))
+                  .catch(err => console.log(err))
               } else {
                 api.likeCard(item).then((res) => {
                   card._like()
                   card._likeCounter.textContent = Object.keys(res.likes).length;
-                  console.log('лайк')
+                  item.likes = res.likes;
                 })
-                .catch(err => renderError(`Ошибка:${err}`))
+                  .catch(err => console.log(err))
 
               }
 
@@ -238,7 +233,7 @@ const popup = new PopupWithForm('#add-place', {
           });
 
           api.getUserInfo().then((res) => {
-            if (res._id === item.owner._id) {} else { card._deleteButton.style.visibility = "hidden" };
+            if (res._id === item.owner._id) { } else { card._deleteButton.style.visibility = "hidden" };
 
             if (item.likes.some(owner => owner.name === res.name)) {
               card._like();
@@ -250,7 +245,7 @@ const popup = new PopupWithForm('#add-place', {
 
 
           })
-          .catch(err => renderError(`Ошибка:${err}`));
+            .catch(err => console.log(err));
 
           const cardElement = card.get();
 
@@ -267,8 +262,8 @@ const popup = new PopupWithForm('#add-place', {
       cardList.renderItems();
 
 
-    }).catch(err => renderError(`Ошибка:${err}`))
-    .finally(popup.loaded());
+    }).catch(err => console.log(err))
+      .finally(popup.loaded());
   }
 });
 popup.setEventListeners();
@@ -307,7 +302,7 @@ const popupEdit = new PopupWithForm('#edit-info', {
       setUserInfo(res);
       avatar.src = res.avatar;
     })
-    .catch(err => renderError(`Ошибка:${err}`));
+      .catch(err => console.log(err));
 
   }
 })
@@ -329,12 +324,14 @@ ValidateUpdate.enableValidation();
 
 console.log(editForm, placeForm, updateForm)
 
-const updateAvaPopup = new PopupWithForm('#popup-update-ava',{submit: () => {
-  updateAvaPopup.loading();
-  api.updatePhotoCard(updateForm.querySelector('#ava-input').value).then((res) => {avatar.src = res.avatar;})
-  .catch(err => renderError(`Ошибка:${err}`))
-  .finally(updateAvaPopup.loaded());
-}})
+const updateAvaPopup = new PopupWithForm('#popup-update-ava', {
+  submit: () => {
+    updateAvaPopup.loading();
+    api.updatePhotoCard(updateForm.querySelector('#ava-input').value).then((res) => { avatar.src = res.avatar; })
+      .catch(err => console.log(err))
+      .finally(updateAvaPopup.loaded());
+  }
+})
 
 updateAvaPopup.setEventListeners();
 
@@ -343,7 +340,7 @@ updateAvaPopup.setEventListeners();
 
 updateAvaButton.addEventListener('click', () => {
   updateAvaPopup.open();
-    // Проверка при открытии модального кона
-    ValidateUpdate.enableValidation();
-    ValidateUpdate.clearErrors();
+  // Проверка при открытии модального кона
+  ValidateUpdate.enableValidation();
+  ValidateUpdate.clearErrors();
 })
