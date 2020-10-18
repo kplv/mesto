@@ -45,3 +45,6 @@
 @import url('../blocks/element/__like-controls/element__like-controls.css');
 @import url('../blocks/profile/__image/profile__image.css');
 @import url('../blocks/profile/__button-update/profile__button-update.css');
+@import url('../blocks/page/__spinner/page__spinner.css');
+
+

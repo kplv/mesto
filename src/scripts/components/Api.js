@@ -5,6 +5,10 @@ export default class Api {
     this._body = config.body;
   }
 
+  getInitialData() {
+    return Promise.all([this.getUserInfo(),this.getAllCards()])
+  }
+
   getAllCards() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',

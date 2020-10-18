@@ -13,7 +13,6 @@ export default class PopupWithForm extends Popup {
     this._selector.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._submit();
-      this.close()
     })
   }
 
@@ -38,7 +37,6 @@ export default class PopupWithForm extends Popup {
 
   loading() {
     this._selector.querySelector('.popup__submit-button').textContent = 'Сохранение…'
-    console.log(this._selector.querySelector('.popup__submit-button').textContent)
   }
 
   loaded() {
